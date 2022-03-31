@@ -15,8 +15,15 @@ import Categoria from "../models/categoria.js"
             throw new Error(`El nombre de a categoria ya existe ${nombre}`)
         }
     }
+    
+    const existeCategoriaCodigo= async (codigo) => {
+        const existe = await Categoria.findOne({codigo})
+
+        if (existe) {
+            throw new Error(`El nombre de a categoria ya existe ${codigo}`)
+        }
+    }
 
 
 
-
-export {existeCategoriaById,existeCategoriaNombre}
+export {existeCategoriaById,existeCategoriaNombre,existeCategoriaCodigo}

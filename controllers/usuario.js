@@ -5,8 +5,8 @@ import bcryptjs from "bcryptjs"
 
 const usuarioPost = async (req,res)=>{
     
-      const {nombre,rol,email,password}=req.body
-      const usuario = new Usuario({nombre,rol,email,password})
+      const {nombre,rol,tipoDocumento,numeroDocumento,direccion,telefono,email,password}=req.body
+      const usuario = new Usuario({nombre,rol,tipoDocumento,numeroDocumento,direccion,telefono,email,password})
      
     //encriptar
       const salt=bcryptjs.genSaltSync(10);

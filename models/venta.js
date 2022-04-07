@@ -2,13 +2,14 @@ import mongoose from 'mongoose'
 
 const VentaSchema=mongoose.Schema({
     usuario:{
-        type:String,
-        reqired:true,
-        maxlength:50,
+        type:mongoose.Schema.Types.ObjectId,ref:'Usuario',   
+        required:true,
+        maxlegth:50
     },
     cliente:{
-        type:String,
-        required:true,
+        type:mongoose.Schema.Types.ObjectId,ref:'Cliente',   
+        required:[true,"El cliente es obligatorio"],
+        maxlegth:50
     },
     tipoComprobante:{
         type:String,
@@ -20,6 +21,7 @@ const VentaSchema=mongoose.Schema({
         type:Number,
     },
     fecha:{
+    
         type:Date,
     },
     impuesto:{

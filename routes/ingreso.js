@@ -7,6 +7,7 @@ import { existeIngresoById, existeIngresoNombre } from "../helpers/ingresoDB.js"
 const router = Router()
 
 router.get("/", ingresoGet)
+
 router.get("/buscar",[
     check('buscar', 'Digite el parametro de busqueda').not().isEmpty(),
     validarCampos

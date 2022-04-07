@@ -8,15 +8,15 @@ import Cliente from "../models/cliente.js"
         }
     }
 
-    const existeClienteNombre= async (nombre) => {
-        const existe = await Cliente.findOne({nombre})
+    const existeClientenDocumento= async (numeroDocumento) => {
+        const existe = await Cliente.findOne({numeroDocumento})
 
         if (existe) {
-            throw new Error(`El nombre del cliente ya existe ${nombre}`)
+            throw new Error(`El numero de documento ya existe ${numeroDocumento}`)
         }
     }
 
 
 
 
-export {existeClienteById,existeClienteNombre}
+export {existeClienteById,existeClientenDocumento}

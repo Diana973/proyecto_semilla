@@ -27,11 +27,14 @@ const ventaGetbuscar = async (req, res) => {
   const ventaGet = async (req, res) => {     
       
       const venta=await Venta.find()
+      .populate('usuario','nombre')
+      .populate('cliente','nombre')
           .sort({'createdAt':-1})  
     
       res.json({ 
           venta
       })
+      
 
   }
 
@@ -75,6 +78,7 @@ const ventaGetbuscar = async (req, res) => {
           venta
       })
   }
+  
 
   const ventaDelete = async (req, res) => {   
       const { id } = req.params;

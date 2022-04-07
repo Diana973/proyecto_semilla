@@ -6,7 +6,9 @@ import { dbConexion } from "../dataBase/config.js"
 //RUTAS
 import categorias from "../routes/categoria.js"
 import articulos from "../routes/articulo.js"
+import cliente from "../routes/cliente.js"
 import usuario from "../routes/usuario.js"
+import venta from "../routes/venta.js"
 import auth from "../routes/auth.js"
 
 
@@ -23,7 +25,9 @@ class Server {
         
         this.app.use("/api/categoria",categorias)
         this.app.use("/api/articulo",articulos)
+        this.app.use("/api/cliente",cliente)
         this.app.use("/api/usuario",usuario)
+        this.app.use("/api/venta",venta)
         this.app.use("/api/auth",auth)
     }
     async conexionDb(){

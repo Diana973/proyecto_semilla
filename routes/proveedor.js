@@ -7,6 +7,7 @@ import { existeProveedorById, existeProveedorNombre} from "../helpers/proveedore
 const router = Router()
 
 router.get("/", proveedorGet)
+
 router.get("/buscar",[
     check('buscar', 'Digite el parametro de busqueda').not().isEmpty(),
     validarCampos

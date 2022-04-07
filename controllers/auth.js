@@ -27,6 +27,7 @@ const login = async (req, res = response) =>{
                 msg:'Usuario/password no son correctos'
             })
         }
+        
         // generar jwt
         const token = await generarJWT(usuario.id);
         res.json({

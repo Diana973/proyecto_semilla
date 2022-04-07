@@ -8,16 +8,12 @@ import Venta from "../models/venta.js"
         }
     }
 
-    const existeVentaNombre= async (numeroComprobante) => {
+    const existeVentaComprobante= async (numeroComprobante) => {
         const existe = await Venta.findOne({numeroComprobante})
 
         if (existe) {
-            throw new Error(`El nombre de a  ya existe ${numeroComprobante}`)
+            throw new Error(`El numero del comprobante ya existe ${numeroComprobante}`)
         }
     }
 
-    
-
-
-
-export {existeVentaById,existeVentaNombre}
+export {existeVentaById,existeVentaComprobante}

@@ -5,6 +5,7 @@ const ClienteSchema=mongoose.Schema({
         type:String,
         required:true,
         maxlength:50,
+        unique:true,
     },
     tipoPersona:{
         type:String,

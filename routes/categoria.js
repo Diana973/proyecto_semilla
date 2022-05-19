@@ -8,7 +8,7 @@ import { validarJWT } from "../middlewares/validar-jwt.js";
 const router = Router()
 
 router.get("/",
-   
+    validarJWT,
     validarCampos
 ,categoriaGet)
 
@@ -20,7 +20,7 @@ router.get('/buscar',
     validarCampos
 ], categoriaGetbuscar)
 
-router.get("/id/:id",
+router.get("/id/:id",validarJWT,
    [
     check('id', 'No es un mongold valido').isMongoId(),
     check('id').custom(existeCategoriaById),
@@ -29,16 +29,15 @@ router.get("/id/:id",
 
 
 
-router.post("/",[
-    check("nombre", 'El nombre de la categoria es obligatorio').not().isEmpty(),
-    check("descripcion", 'La descripcion de la categoria es obligatorio').not().isEmpty(),
+router.post("/",validarJWT,[
+    check("nombre", 'El nombre de la categoria es obligatorio').trim().not().isEmpty(),
+    check("descripcion", 'La descripcion de la categoria es obligatorio').trim().not().isEmpty(),
     check("nombre").custom(existeCategoriaNombre),
     validarCampos,
     
 ], categoriaPost)
 
-router.put("/:id",[
-    validarJWT,
+router.put("/:id", validarJWT,[
     check('id', 'No es un mongold valido').isMongoId(),
     validarCampos
 ], categoriaPut)

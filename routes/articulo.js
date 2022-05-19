@@ -2,7 +2,7 @@ import { Router } from "express";
 import { check } from "express-validator";
 import { validarCampos } from "../middlewares/validar_campos.js";
 import { articuloGet,articuloPost,articuloPut,articuloPutActivar,articuloPutDesactivar, articuloDelete,articuloGetByid,articuloGetbuscar} from "../controllers/articulo.js";
-import { existeArticuloById, existeArticuloNombre } from "../helpers/articulosDB.js";
+import { existeArticuloById, existeArticuloNombre, existeArticuloStock,existeArticuloPrecio,existeArticuloCodigo } from "../helpers/articulosDB.js";
 import { validarJWT } from "../middlewares/validar-jwt.js";
 
 
@@ -10,54 +10,52 @@ const router = Router()
 
 router.get("/",
 validarJWT, 
+validarCampos,
 articuloGet,
 
 )
 
-router.get("/buscar",[
+router.get("/buscar",validarJWT,[
     check('query', 'Digite el parametro de busqueda').not().isEmpty(),
     validarCampos
 ], articuloGetbuscar)
 
-router.get("/id/:id",[
-    validarJWT,
+router.get("/id/:id", validarJWT,[
     check('id', 'No es un mongold valido').isMongoId(),
     check('id').custom(existeArticuloById),
     validarCampos
 ], articuloGetByid)
 
-
-router.post("/",[
-    validarJWT,
-    check("nombre", 'El nombre de la categoria es obligatorio').not().isEmpty(),
-    check("descripcion", 'La descripcion de la categoria es obligatorio').not().isEmpty(),
-    check("codigo", 'La descripcion de la categoria es obligatorio').not().isEmpty(),
-    check("categoria", 'La categoria del articulo es obligatorio').not().isEmpty(),
-    check("stock", 'La descripcion de la categoria es obligatorio').not().isEmpty(),
-    check("precioVenta", 'La descripcion de la categoria es obligatorio').not().isEmpty(),
+router.post("/", validarJWT,[
+    check("nombre", 'El nombre del articulo es obligatorio').not().isEmpty().trim(),
+    check("descripcion", 'La descripcion del articulo es obligatorio').not().isEmpty().trim(),
+    check("codigo", 'El codigo del articulo es obligatorio').not().isEmpty().trim(),
+    check("categoria", 'La categoria del articulo es obligatorio').not().isEmpty().trim(),
+    check("stock", 'El stock del articulo es obligatorio').not().isEmpty().trim(),
+    check("precioVenta", 'El precio del articulo es obligatorio').not().isEmpty().trim(),
     check("nombre").custom(existeArticuloNombre),
+    check("codigo").custom(existeArticuloCodigo),
+    check("stock").custom(existeArticuloStock),
+    check("precioVenta").custom(existeArticuloPrecio),
     validarCampos
 ], articuloPost)
 
-
-
-
-router.put("/:id",[validarJWT,
+router.put("/:id",validarJWT,[
     check('id', 'No es un mongold valido').isMongoId(),
     validarCampos
 ], articuloPut)
 
-router.put("/activar/:id",[
+router.put("/activar/:id",validarJWT,[
     check('id', 'No es un mongold valido').isMongoId(),
     validarCampos
 ], articuloPutActivar)
 
-router.put("/desactivar/:id",[
+router.put("/desactivar/:id",validarJWT,[
     check('id', 'No es un mongold valido').isMongoId(),
     validarCampos
 ], articuloPutDesactivar)
 
-router.delete("/:id",[
+router.delete("/:id",validarJWT,[
     check('id', 'No es un mongold valido').isMongoId(),
     validarCampos
 ], articuloDelete)

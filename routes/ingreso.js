@@ -1,48 +1,56 @@
 import { Router } from "express";
 import { check } from "express-validator";
 import { validarCampos } from "../middlewares/validar_campos.js";
+import { validarJWT } from "../middlewares/validar-jwt.js";
 import { ingresoGet, ingresoPost, ingresoGetbuscar, ingresoGetByid, ingresoPut, ingresoPutActivar, ingresoPutDesactivar, ingresoDelete} from "../controllers/ingreso.js";
-import { existeIngresoById, existeIngresoNombre } from "../helpers/ingresoDB.js";
+import { existeIngresoById, existeIngresoNcomprobante } from "../helpers/ingresosDB.js";
 
 const router = Router()
 
-router.get("/", ingresoGet)
+router.get("/",
+validarJWT,
+validarCampos,
+ ingresoGet)
 
-router.get("/buscar",[
+router.get("/buscar",validarJWT,[
     check('buscar', 'Digite el parametro de busqueda').not().isEmpty(),
     validarCampos
 ], ingresoGetbuscar)
 
-router.get("/id/:id",[
+router.get("/id/:id",validarJWT,[
     check('id', 'No es un mongold valido').isMongoId(),
     check('id').custom(existeIngresoById),
     validarCampos
 ], ingresoGetByid)
 
 
-router.post("/",[
-    check("nombre", 'El nombre de la categoria es obligatorio').not().isEmpty(),
-    check("descripcion", 'La descripcion de la categoria es obligatorio').not().isEmpty(),
-    check("nombre").custom(existeIngresoNombre),
+router.post("/",validarJWT,[
+    check("usuario",'El nombre del usuario es obligatorio').trim().not().isEmpty(),
+    check("proveedor",'El nombre del proveedor es obligatorio').trim().not().isEmpty(),
+    check("tipoComprobante",'El tipo comprobante es obligatorio').trim().not().isEmpty(),
+    check("serieComprobante",'La serie del comprobante es obligatorio').trim().not().isEmpty(),
+    check("numeroComprobante",'El numero del comprobante es obligatorio').trim().not().isEmpty(),
+    check("impuesto",'El impuesto es obligatorio').not().isEmpty(),
+    check("nComprovante").custom( existeIngresoNcomprobante),
     validarCampos
 ], ingresoPost)
 
-router.put("/:id",[
+router.put("/:id",validarJWT,[
     check('id', 'No es un mongold valido').isMongoId(),
     validarCampos
 ], ingresoPut)
 
-router.put("/activar/:id",[
+router.put("/activar/:id",validarJWT,[
     check('id', 'No es un mongold valido').isMongoId(),
     validarCampos
 ], ingresoPutActivar)
 
-router.put("/desactivar/:id",[
+router.put("/desactivar/:id",validarJWT,[
     check('id', 'No es un mongold valido').isMongoId(),
     validarCampos
 ], ingresoPutDesactivar)
 
-router.delete("/:id",[
+router.delete("/:id",validarJWT,[
     check('id', 'No es un mongold valido').isMongoId(),
     validarCampos
 ], ingresoDelete)
@@ -50,4 +58,5 @@ router.delete("/:id",[
 router.delete("/")
 
 export default router
+
 

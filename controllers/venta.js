@@ -1,15 +1,22 @@
 import Venta from "../models/venta.js"
-
-
+import Articulo from "../models/articulo.js"
 
 const ventaPost=async (req,res)=>{
     
-      const {usuario,cliente,tipoComprobante,serieComprobante,numeroComprobante,fecha,impuesto,total}=req.body
-      const venta =new Venta({usuario,cliente,tipoComprobante,serieComprobante,numeroComprobante,fecha,impuesto,total})
-      await venta.save()
+      const {usuario,cliente,tipoComprobante,serieComprobante,numeroComprobante,fecha,detalles,impuesto,total}=req.body
+      const venta =new Venta({usuario,cliente,tipoComprobante,detalles,serieComprobante,numeroComprobante,fecha,impuesto,total})
 
+      venta.detalles.forEach(async (e) => { 
+      e.subtotal=(e.cantidad * e.precio )-((e.cantidad * e.precio)*e.descuento)/100
+      let { stock } = await Articulo.findById({ _id: e.id });
+      stock = stock - e.cantidad
+      await Articulo.findByIdAndUpdate(e.id, { stock })
+      })
+
+
+      
+      await venta.save()
       res.json(venta)
-    
 }
 
 const ventaGetbuscar = async (req, res) => {     
@@ -26,16 +33,17 @@ const ventaGetbuscar = async (req, res) => {
 
   const ventaGet = async (req, res) => {     
       
-      const venta=await Venta.find()
-      .populate('usuario','nombre')
+      let venta=await Venta.find().lean()
+      .populate('usuario',['nombre','rol'])
       .populate('cliente','nombre')
           .sort({'createdAt':-1})  
     
-      res.json({ 
-          venta
-      })
-      
-
+          
+     venta.forEach(item =>item.rol=`${item.usuario.nombre} - ${item.usuario.rol}`)
+     
+      res.json({
+        venta
+    })
   }
 
   const ventaGetByid= async (req, res ) => {

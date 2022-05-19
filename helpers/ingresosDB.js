@@ -8,15 +8,15 @@ import Ingreso from "../models/ingreso.js"
         }
     }
 
-    const existeIngresoNcomprovante= async (ncomprobante) => {
-        const existe = await Ingreso.findOne({ncomprobante})
+    const existeIngresoNcomprobante= async (numeroComprobante) => {
+        const existe = await Ingreso.findOne({numeroComprobante})
 
         if (existe) {
-            throw new Error(`El nombre de a categoria ya existe ${ncomprobante}`)
+            throw new Error(`El numero del comprobante ya existe ${numeroComprobante}`)
         }
     }
 
 
 
 
-export {existeIngresoById,existeIngresoNcomprovante}
+export {existeIngresoById,existeIngresoNcomprobante}

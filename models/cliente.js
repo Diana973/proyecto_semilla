@@ -9,6 +9,7 @@ const ClienteSchema=mongoose.Schema({
     },
     tipoPersona:{
         type:String,
+        required:true,
     },
     tipoDocumento:{
         type:String,

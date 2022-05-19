@@ -4,8 +4,9 @@ const VentaSchema=mongoose.Schema({
     usuario:{
         type:mongoose.Schema.Types.ObjectId,ref:'Usuario',   
         required:true,
-        maxlegth:50
+        maxlegth:100
     },
+    
     cliente:{
         type:mongoose.Schema.Types.ObjectId,ref:'Cliente',   
         required:[true,"El cliente es obligatorio"],
@@ -15,14 +16,14 @@ const VentaSchema=mongoose.Schema({
         type:String,
     },
     serieComprobante:{
-        type:Number,
+        type:String,
     },
     numeroComprobante:{
         type:Number,
     },
     fecha:{
-    
         type:Date,
+        default:Date.now
     },
     impuesto:{
         type:Number,
@@ -37,7 +38,39 @@ const VentaSchema=mongoose.Schema({
     createAt:{
         type:Date,
         default: Date.now
-    }
+    },
+
+
+    detalles:[{
+        
+        id:{
+            type:String,
+        },
+
+        nombreProducto:{
+           type:String,
+           required:true,
+        },
+
+        cantidad:{
+            type:Number,
+            required:true,
+        },
+        
+        precio:{
+            type:Number,
+            
+        },
+
+        descuento:{
+            type:Number,
+        },
+
+        subtotal:{
+            type:Number,
+        }
+
+    }]
 
 })
 export default mongoose.model("Venta",VentaSchema)

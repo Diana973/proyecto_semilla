@@ -8,18 +8,18 @@ const ProveedorSchema=mongoose.Schema({
     },
     tipoPersona:{
         type:String,
-        required:true,
+        reqired:true,
     },
     tipoDocumento:{
         type:String,
         required:true,
     },
     numeroDocumento:{
-        type:String,
+        type:Number,
         unique:true
     },
     direccion:{
-        type:Number,
+        type:String,
     },
     telefono:{
         type:Number,
@@ -40,5 +40,6 @@ const ProveedorSchema=mongoose.Schema({
         default: Date.now
     }
 
+    
 })
 export default mongoose.model("Proveedor",ProveedorSchema)

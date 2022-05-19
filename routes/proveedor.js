@@ -1,48 +1,57 @@
 import { Router } from "express";
 import { check } from "express-validator";
 import { validarCampos } from "../middlewares/validar_campos.js";
-import { proveedorGet, proveedorPost, proveedorGetbuscar, proveedorGetByid, proveedorPut, proveedorPutActivar, proveedorPutDesactivar, proveedorDelete} from "../controllers/proveedor.js";
-import { existeProveedorById, existeProveedorNombre} from "../helpers/proveedoresDB.js";
+import { proveedorGet, proveedorPost, proveedorGetbuscar, proveedorGetByid, proveedorPut, proveedorPutActivar, proveedorPutDesactivar, proveedorDelete } from "../controllers/proveedor.js";
+import { existeProveedorById, existeProveedorDocumento, existeProveedorNombre } from "../helpers/proveedoresDB.js";
+import { validarJWT } from "../middlewares/validar-jwt.js";
 
 const router = Router()
 
-router.get("/", proveedorGet)
+router.get("/",validarJWT,
+validarCampos,
+ proveedorGet)
 
-router.get("/buscar",[
+router.get("/buscar",validarJWT,[
     check('buscar', 'Digite el parametro de busqueda').not().isEmpty(),
     validarCampos
 ], proveedorGetbuscar)
 
-router.get("/id/:id",[
+router.get("/id/:id",validarJWT,[
     check('id', 'No es un mongold valido').isMongoId(),
     check('id').custom(existeProveedorById),
     validarCampos
 ], proveedorGetByid)
 
 
-router.post("/",[
-    check("nombre", 'El nombre de la categoria es obligatorio').not().isEmpty(),
-    check("descripcion", 'La descripcion de la categoria es obligatorio').not().isEmpty(),
+router.post("/",validarJWT,[
+    check("nombre", 'El nombre del proveedor es obligatorio').trim().not().isEmpty(),
+    check("tipoPersona", 'El tipo persona  es obligatorio').trim().not().isEmpty(),
+    check("tipoDocumento", 'El tipo documento  es obligatorio').trim().not().isEmpty(),
+    check("numeroDocumento", 'El numero del documento es obligatorio').trim().not().isEmpty(),
+    check("direccion", 'La direccion es obligatoria').trim().not().isEmpty(),
+    check("telefono", 'El telefono es obligatorio').trim().not().isEmpty(),
+    check("email", 'El correo no es valido').trim().not().isEmpty().isEmail(),
     check("nombre").custom(existeProveedorNombre),
+    check("numeroDocumento").custom(existeProveedorDocumento),
     validarCampos
 ], proveedorPost)
 
-router.put("/:id",[
-    check('id', 'No es un mongold valido').isMongoId(),
+router.put("/:id",validarJWT,[
+    check('id', 'No es un mongold validooo').isMongoId(),
     validarCampos
 ], proveedorPut)
 
-router.put("/activar/:id",[
+router.put("/activar/:id",validarJWT,[
     check('id', 'No es un mongold valido').isMongoId(),
     validarCampos
 ], proveedorPutActivar)
 
-router.put("/desactivar/:id",[
+router.put("/desactivar/:id",validarJWT,[
     check('id', 'No es un mongold valido').isMongoId(),
     validarCampos
 ], proveedorPutDesactivar)
 
-router.delete("/:id",[
+router.delete("/:id",validarJWT,[
     check('id', 'No es un mongold valido').isMongoId(),
     validarCampos
 ], proveedorDelete)

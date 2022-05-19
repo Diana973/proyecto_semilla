@@ -4,8 +4,8 @@ import Ingreso from "../models/ingreso.js"
 
 const ingresoPost=async (req,res)=>{
     
-      const {usuario,proveedor,tipoComprobante,serieComprobante,numeroComprobante,fecha,impuesto,total}=req.body
-      const ingreso =new Ingreso({usuario,proveedor,tipoComprobante,serieComprobante,numeroComprobante,fecha,impuesto,total})
+      const {usuario,proveedor,tipoComprobante,serieComprobante,numeroComprobante,fecha,impuesto,total,detalles}=req.body
+      const ingreso =new Ingreso({usuario,proveedor,tipoComprobante,serieComprobante,numeroComprobante,fecha,impuesto,total,detalles})
       await ingreso.save()
 
       res.json(ingreso)
@@ -28,6 +28,8 @@ const ingresoGetbuscar = async (req, res) => {
   const ingresoGet = async (req, res) => {     
       
       const ingreso=await Ingreso.find()
+      .populate('usuario','nombre')
+      .populate('proveedor','nombre')
           .sort({'createdAt':-1}) 
      
       res.json({ 

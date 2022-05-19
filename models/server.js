@@ -10,6 +10,8 @@ import cliente from "../routes/cliente.js"
 import usuario from "../routes/usuario.js"
 import venta from "../routes/venta.js"
 import auth from "../routes/auth.js"
+import proveedor from "../routes/proveedor.js"
+import ingresos from "../routes/ingreso.js"
 
 
 class Server {
@@ -29,6 +31,8 @@ class Server {
         this.app.use("/api/usuario",usuario)
         this.app.use("/api/venta",venta)
         this.app.use("/api/auth",auth)
+        this.app.use("/api/proveedor",proveedor)
+        this.app.use("/api/ingreso",ingresos)
     }
     async conexionDb(){
      await dbConexion()

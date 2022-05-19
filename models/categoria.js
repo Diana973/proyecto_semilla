@@ -18,6 +18,9 @@ const CategoriaSchema=mongoose.Schema({
     createdAt:{type:Date, 
         default:Date.now
     },
+
+
+    
     
 })
 export default mongoose.model("Categoria",CategoriaSchema)

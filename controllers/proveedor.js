@@ -1,11 +1,9 @@
-import Proveedor from "../models/proveedor"
-
-
+import Proveedor from "../models/proveedor.js"
 
 const proveedorPost=async (req,res)=>{
     
-      const {nombre,tipoPersona,numeroDocumento,direccion,telefono,email}=req.body
-      const proveedor =new Proveedor({nombre,tipoPersona,numeroDocumento,direccion,telefono,email})
+      const {nombre,tipoPersona,tipoDocumento,numeroDocumento,direccion,telefono,email}=req.body
+      const proveedor =new Proveedor({nombre,tipoPersona,tipoDocumento,numeroDocumento,direccion,telefono,email})
       await proveedor.save()
 
       res.json(proveedor)
@@ -14,7 +12,7 @@ const proveedorPost=async (req,res)=>{
 
 const proveedorGetbuscar = async (req, res) => {     
       const query=req.query.query;
-      const proveedor=await Proveedor.find({$or:[
+      const proveedor = await Proveedor.find({$or:[
               {tipoPersona:new RegExp(query,'i')},
               {numeroDocumento:new RegExp(query,'i')},
           ]})
@@ -33,6 +31,7 @@ const proveedorGetbuscar = async (req, res) => {
       res.json({ 
         proveedor
       })
+
 
   }
 

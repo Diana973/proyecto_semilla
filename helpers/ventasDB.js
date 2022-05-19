@@ -1,4 +1,5 @@
 import Venta from "../models/venta.js"
+import Articulo from "../models/articulo.js"
 
    const existeVentaById= async (id) => {
         const existe = await Venta.findById(id)
@@ -16,4 +17,24 @@ import Venta from "../models/venta.js"
         }
     }
 
-export {existeVentaById,existeVentaComprobante}
+
+     const existeArticuloStock= async (detalles) => {
+
+        if (detalles) {
+            for (let i = 0; i < detalles.length; i++) {
+                const detalle = detalles[i]
+                const articulo = await Articulo.findById(detalle.id)
+                if (articulo) {
+                    if ((articulo.stock - detalle.cantidad) < 0) {
+                        throw new Error(`Stock insuficiente del articulo: ${articulo.nombre}`)
+                    }
+                }
+
+            }
+
+        }
+
+    }
+
+
+export {existeVentaById,existeVentaComprobante,existeArticuloStock}

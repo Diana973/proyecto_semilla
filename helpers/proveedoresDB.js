@@ -12,11 +12,18 @@ import Proveedor from "../models/proveedor.js"
         const existe = await Proveedor.findOne({nombre})
 
         if (existe) {
-            throw new Error(`El nombre de a categoria ya existe ${nombre}`)
+            throw new Error(`El nombre del proveedor ya existe ${nombre}`)
+        }
+    }
+
+    const existeProveedorDocumento= async (numeroDocumento) => {
+        const existe = await Proveedor.findOne({numeroDocumento})
+        if (existe) {
+            throw new Error(`El numero de documento ya existe ${numeroDocumento}`)
         }
     }
 
 
 
 
-export {existeProveedorById,existeProveedorNombre}
+export {existeProveedorById,existeProveedorNombre,existeProveedorDocumento}

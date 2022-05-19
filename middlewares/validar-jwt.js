@@ -42,7 +42,7 @@ const validarJWT = async (req, res = response, next) => {
 
 }
 
-async function checkToken(token) {
+async function checkToken (token){
     let__id = null;
     try {
         const { _id } = await jwt.decode(token);

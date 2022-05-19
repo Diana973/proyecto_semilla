@@ -22,7 +22,7 @@ router.get("/id/:id",validarJWT,[
     validarCampos
 ], usuarioGetByid)
 
-router.post("/",validarJWT,[
+router.post("/",[
     check("rol", 'El rol es obligatorio').trim().not().isEmpty(),
     check("nombre", 'El nombre es obligatorio').trim().not().isEmpty(),
     check("password",'El password debe ser mas de 8 caracteres').trim().not().isEmpty().isLength({min:6 ,max:15}),

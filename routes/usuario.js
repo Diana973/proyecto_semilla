@@ -27,7 +27,7 @@ router.post("/",[
     check("nombre", 'El nombre es obligatorio').trim().not().isEmpty(),
     check("password",'El password debe ser mas de 8 caracteres').trim().not().isEmpty().isLength({min:6 ,max:15}),
     check("email", 'El correo no es valido').trim().not().isEmpty().isEmail(),
-    check("nombre").custom(existeUsuarioNombre),
+   // check("nombre").custom(existeUsuarioNombre),
     validarCampos
 ],usuarioPost)
 

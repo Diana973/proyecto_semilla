@@ -21,6 +21,7 @@ import Articulo from "../models/articulo.js"
      const existeArticuloStock= async (detalles) => {
 
         if (detalles) {
+            
             for (let i = 0; i < detalles.length; i++) {
                 const detalle = detalles[i]
                 const articulo = await Articulo.findById(detalle.id)
@@ -28,6 +29,8 @@ import Articulo from "../models/articulo.js"
                     if ((articulo.stock - detalle.cantidad) < 0) {
                         throw new Error(`Stock insuficiente del articulo: ${articulo.nombre}`)
                     }
+                }else{
+                    throw new Error(`Stock insuficiente del articulo: ${articulo.nombre}`)
                 }
 
             }

@@ -14,7 +14,6 @@ validarCampos,
 articuloGet,
 
 )
-
 router.get("/buscar",validarJWT,[
     check('query', 'Digite el parametro de busqueda').not().isEmpty(),
     validarCampos
@@ -27,12 +26,12 @@ router.get("/id/:id", validarJWT,[
 ], articuloGetByid)
 
 router.post("/", validarJWT,[
-    check("nombre", 'El nombre del articulo es obligatorio').not().isEmpty().trim(),
-    check("descripcion", 'La descripcion del articulo es obligatorio').not().isEmpty().trim(),
-    check("codigo", 'El codigo del articulo es obligatorio').not().isEmpty().trim(),
-    check("categoria", 'La categoria del articulo es obligatorio').not().isEmpty().trim(),
-    check("stock", 'El stock del articulo es obligatorio').not().isEmpty().trim(),
-    check("precioVenta", 'El precio del articulo es obligatorio').not().isEmpty().trim(),
+    check("nombre", 'El nombre del articulo es obligatorio').trim().not().isEmpty(),
+    check("descripcion", 'La descripcion del articulo es obligatorio').trim().not().isEmpty(),
+    check("codigo", 'El codigo del articulo es obligatorio').trim().not().isEmpty(),
+    check("categoria", 'La categoria del articulo es obligatorio').trim().not().isEmpty(),
+    check("stock", 'El stock del articulo es obligatorio').trim().not().isEmpty(),
+    check("precioVenta", 'El precio del articulo es obligatorio').trim().not().isEmpty(),
     check("nombre").custom(existeArticuloNombre),
     check("codigo").custom(existeArticuloCodigo),
     check("stock").custom(existeArticuloStock),

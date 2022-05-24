@@ -3,7 +3,7 @@ import { check } from "express-validator";
 import { validarCampos } from "../middlewares/validar_campos.js";
 import { validarJWT } from "../middlewares/validar-jwt.js";
 import { ventaGet,  ventaPost,  ventaGetbuscar,  ventaGetByid,  ventaPut,  ventaPutActivar,  ventaPutDesactivar,  ventaDelete} from "../controllers/venta.js";
-import { existeVentaById, existeVentaComprobante,existeArticuloStock } from "../helpers/ventasDB.js";
+import { existeVentaById, existeVentaComprobante,existeArticuloStock} from "../helpers/ventasDB.js";
 
 const router = Router()
 
@@ -11,6 +11,7 @@ router.get("/",
 validarJWT,
 validarCampos, 
 ventaGet)
+
 
 router.get("/buscar",validarJWT,[
     check('buscar','Digite el parametro de busqueda').not().isEmpty(),
@@ -35,10 +36,6 @@ router.post("/",validarJWT,[
     check("numeroComprovante").custom(existeVentaComprobante),
     validarCampos
 ], ventaPost)
-
-
-
-
 
 router.put("/:id",validarJWT,[
     check('id', 'No es un mongold valido').isMongoId(),

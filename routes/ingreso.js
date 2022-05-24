@@ -3,7 +3,7 @@ import { check } from "express-validator";
 import { validarCampos } from "../middlewares/validar_campos.js";
 import { validarJWT } from "../middlewares/validar-jwt.js";
 import { ingresoGet, ingresoPost, ingresoGetbuscar, ingresoGetByid, ingresoPut, ingresoPutActivar, ingresoPutDesactivar, ingresoDelete} from "../controllers/ingreso.js";
-import { existeIngresoById, existeIngresoNcomprobante } from "../helpers/ingresosDB.js";
+import { existeIngresoById, existeIngresoNcomprobante,existeArticuloStock } from "../helpers/ingresosDB.js";
 
 const router = Router()
 
@@ -30,8 +30,9 @@ router.post("/",validarJWT,[
     check("tipoComprobante",'El tipo comprobante es obligatorio').trim().not().isEmpty(),
     check("serieComprobante",'La serie del comprobante es obligatorio').trim().not().isEmpty(),
     check("numeroComprobante",'El numero del comprobante es obligatorio').trim().not().isEmpty(),
-    check("impuesto",'El impuesto es obligatorio').not().isEmpty(),
+    check("impuesto",'El impuesto es obligatorio').trim().not().isEmpty(),
     check("nComprovante").custom( existeIngresoNcomprobante),
+    check("detalles").custom(existeArticuloStock),
     validarCampos
 ], ingresoPost)
 

@@ -30,14 +30,16 @@ router.get("/id/:id",validarJWT,
 
 
 router.post("/",validarJWT,[
-    check("nombre", 'El nombre de la categoria es obligatorio').trim().not().isEmpty(),
-    check("descripcion", 'La descripcion de la categoria es obligatorio').trim().not().isEmpty(),
+    check("nombre", 'El nombre de la categoria es obligatoria').trim().not().isEmpty(),
+    check("descripcion", 'La descripcion de la categoria es obligatoria').trim().not().isEmpty(),
     check("nombre").custom(existeCategoriaNombre),
     validarCampos,
     
 ], categoriaPost)
 
 router.put("/:id", validarJWT,[
+    check("nombre", 'El nombre de la categoria es obligatoria').trim().not().isEmpty(),
+    check("descripcion", 'La descripcion de la categoria es obligatoria').trim().not().isEmpty(),
     check('id', 'No es un mongold valido').isMongoId(),
     validarCampos
 ], categoriaPut)

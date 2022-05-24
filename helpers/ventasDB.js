@@ -36,8 +36,23 @@ import Articulo from "../models/articulo.js"
             }
 
         }
-
     }
 
+    // const detallesVacios= async (detalles) => {
+        // if (detalles) {
+            // 
+            // for (let i = 0; i < detalles.length; i++) {
+                // const detalle = detalles[i]
+                // const articulo = await Articulo.findById(detalle.id)
+                // if (articulo) {
+                    // if (articulo.nombre===""){
+                        // throw new Error('Agrega un articulo')
+                    // }
+                // }else{
+                    // throw new Error(`Agrega un articulo: ${articulo.nombre}`)
+                // }
+            // }
+        // }
+    // }
 
 export {existeVentaById,existeVentaComprobante,existeArticuloStock}

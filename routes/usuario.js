@@ -3,20 +3,19 @@ import { check } from "express-validator";
 import { validarCampos } from "../middlewares/validar_campos.js";
 import { usuarioGet, usuarioPost, usuarioGetbuscar, usuarioGetByid, usuarioPut, usuarioPutActivar, usuarioPutDesactivar, usuarioDelete} from "../controllers/usuario.js";
 import { existeUsuarioById,existeUsuarioNombre } from "../helpers/usuariosDB.js";
-import { validarJWT } from "../middlewares/validar-jwt.js";
 
 const router = Router()
 
-router.get("/" ,validarJWT, 
+router.get("/", 
 validarCampos,usuarioGet)
 
-router.get("/buscar",validarJWT,[
+router.get("/buscar",[
     check('buscar','Digite el parametro de busqueda').not().isEmpty(),
     validarCampos
 ], usuarioGetbuscar)
 
 
-router.get("/id/:id",validarJWT,[
+router.get("/id/:id",[
     check('id', 'No es un mongold valido').isMongoId(),
     check('id').custom(existeUsuarioById),
     validarCampos
@@ -27,26 +26,28 @@ router.post("/",[
     check("nombre", 'El nombre es obligatorio').trim().not().isEmpty(),
     check("password",'El password debe ser mas de 8 caracteres').trim().not().isEmpty().isLength({min:6 ,max:15}),
     check("email", 'El correo no es valido').trim().not().isEmpty().isEmail(),
-   // check("nombre").custom(existeUsuarioNombre),
+    check("nombre").custom(existeUsuarioNombre),
     validarCampos
 ],usuarioPost)
 
-router.put("/:id",validarJWT,[
+
+
+router.put("/:id",[
     check('id', 'No es un mongold valido').isMongoId(),
     validarCampos
 ], usuarioPut)
 
-router.put("/activar/:id",validarJWT,[
+router.put("/activar/:id",[
     check('id', 'No es un mongold valido').isMongoId(),
     validarCampos
 ], usuarioPutActivar)
 
-router.put("/desactivar/:id",validarJWT,[
+router.put("/desactivar/:id",[
     check('id', 'No es un mongold valido').isMongoId(),
     validarCampos
 ], usuarioPutDesactivar)
 
-router.delete("/:id",validarJWT,[
+router.delete("/:id",[
     check('id', 'No es un mongold valido').isMongoId(),
     validarCampos
 ], usuarioDelete)

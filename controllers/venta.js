@@ -11,6 +11,7 @@ const ventaPost=async (req,res)=>{
       let { stock } = await Articulo.findById({ _id: e.id });
       stock = stock - e.cantidad
       await Articulo.findByIdAndUpdate(e.id, { stock })
+      console.log(e.nombreProducto);
       })
 
 

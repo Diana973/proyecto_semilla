@@ -1,13 +1,20 @@
 import Ingreso from "../models/ingreso.js"
-
+import Articulo from "../models/articulo.js"
 
 
 const ingresoPost=async (req,res)=>{
     
       const {usuario,proveedor,tipoComprobante,serieComprobante,numeroComprobante,fecha,impuesto,total,detalles}=req.body
       const ingreso =new Ingreso({usuario,proveedor,tipoComprobante,serieComprobante,numeroComprobante,fecha,impuesto,total,detalles})
+      
+      ingreso.detalles.forEach(async (e) => {e.subtotal=(e.cantidad * e.precio)
+      let { stock } = await Articulo.findById({ _id: e.id });
+      stock = stock - e.cantidad
+      await Articulo.findByIdAndUpdate(e.id, { stock })
+      console.log(e.nombreProducto);
+      })
+     
       await ingreso.save()
-
       res.json(ingreso)
     
 }

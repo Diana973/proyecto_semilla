@@ -16,11 +16,13 @@ const IngresoSchema=mongoose.Schema({
         type:String,
     },
     serieComprobante:{
-        type:Number,
+        type:String,
     },
+
     numeroComprobante:{
         type:Number,
     },
+
     fecha:{
         type:Date,
         default:Date.now
@@ -43,8 +45,7 @@ const IngresoSchema=mongoose.Schema({
     detalles:[{
     
         id:{
-            type:String,
-            
+            type:String,  
         },
         nombreProducto:{
            type:String,
@@ -57,7 +58,7 @@ const IngresoSchema=mongoose.Schema({
         
         precio:{
             type:Number,
-            required:true,
+           
         },
         subtotal:{
             type:Number,

@@ -30,8 +30,8 @@ router.get("/id/:id",validarJWT,
 
 
 router.post("/",validarJWT,[
-    check("nombre", 'El nombre de la categoria es obligatoria').trim().not().isEmpty(),
-    check("descripcion", 'La descripcion de la categoria es obligatoria').trim().not().isEmpty(),
+    check("nombre", 'El nombre de la categoria es obligatoria').trim().not().isEmpty().isLength({max:100}),
+    check("descripcion", 'La descripcion de la categoria es obligatoria').trim().not().isEmpty().isLength({max:250}),
     check("nombre").custom(existeCategoriaNombre),
     validarCampos,
     

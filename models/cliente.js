@@ -17,7 +17,7 @@ const ClienteSchema=mongoose.Schema({
     numeroDocumento:{
         type:String,
         required:true,
-        maxlength:50
+        maxlength:20
     },
     direccion:{
         type:String,

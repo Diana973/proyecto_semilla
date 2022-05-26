@@ -25,12 +25,13 @@ router.get("/id/:id",validarJWT,[
 
 
 router.post("/",validarJWT,[
-    check("nombre", 'El nombre del cliente es obligatorio').trim().not().isEmpty(),
+    check("nombre", 'El nombre del cliente es obligatorio').trim().not().isEmpty().isLength({max:50}),
     check("tipoPersona", 'El tipo de persona es obligatorio').trim().not().isEmpty(),
     check("tipoDocumento", 'El tipo de documento es obligatorio').trim().not().isEmpty(),
-    check("numeroDocumento", 'El numero del documento es obligatorio').trim().not().isEmpty(),
+    check("numeroDocumento", 'El numero del documento es obligatorio').trim().not().isEmpty().isLength({max:20}),
     check("direccion", 'la direccion es obligatoria').trim().not().isEmpty(),
     check("telefono", 'El telefono es obligatorio').trim().not().isEmpty(),
+    check("email",'El email es obligatorio').trim().not().isEmpty().isLength({max:50}),
     check("numeroDocumento").custom(existeClientenDocumento),
     validarCampos
 ], clientePost)

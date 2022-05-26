@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const CategoriaSchema=mongoose.Schema({
     nombre:{ type:String,
     required:[true,"El nombre es obligatorio"],
-    maxlegth:250,
+    maxlegth:100,
     unique:true
     },
     descripcion:{

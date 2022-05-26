@@ -26,10 +26,10 @@ router.get("/id/:id", validarJWT,[
 ], articuloGetByid)
 
 router.post("/", validarJWT,[
-    check("nombre", 'El nombre del articulo es obligatorio').trim().not().isEmpty(),
-    check("descripcion", 'La descripcion del articulo es obligatorio').trim().not().isEmpty(),
+    check("nombre", 'El nombre del articulo es obligatorio').trim().not().isEmpty().isLength({max:100}),
+    check("descripcion", 'La descripcion del articulo es obligatorio').trim().not().isEmpty().isLength({max:200}),
     check("codigo", 'El codigo del articulo es obligatorio').trim().not().isEmpty(),
-    check("categoria", 'La categoria del articulo es obligatorio').trim().not().isEmpty(),
+    check("categoria", 'La categoria del articulo es obligatorio').trim().not().isEmpty().isLength({max:100}),
     check("stock", 'El stock del articulo es obligatorio').trim().not().isEmpty(),
     check("precioVenta", 'El precio del articulo es obligatorio').trim().not().isEmpty(),
     check("nombre").custom(existeArticuloNombre),

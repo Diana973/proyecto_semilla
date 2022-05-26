@@ -26,8 +26,8 @@ router.get("/id/:id",validarJWT,[
 
 
 router.post("/",validarJWT,[
-    check("usuario",'El nombre del usuario es obligatorio').trim().not().isEmpty(),
-    check("cliente",'El nombre del cliente es obligatorio').trim().not().isEmpty(),
+    check("usuario",'El nombre del usuario es obligatorio').trim().not().isEmpty().isLength({max:100}),
+    check("cliente",'El nombre del cliente es obligatorio').trim().not().isEmpty().isLength({max:50}),
     check("tipoComprobante",'El tipo comprobante es obligatorio').trim().not().isEmpty(),
     check("serieComprobante",'La serie del comprobante es obligatorio').trim().not().isEmpty(),
     check("numeroComprobante",'El numero del comprobante es obligatorio').trim().not().isEmpty(),

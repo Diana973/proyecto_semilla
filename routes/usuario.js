@@ -22,9 +22,13 @@ router.get("/id/:id",[
 ], usuarioGetByid)
 
 router.post("/",[
-    check("rol", 'El rol es obligatorio').trim().not().isEmpty(),
-    check("nombre", 'El nombre es obligatorio').trim().not().isEmpty(),
+    check("rol", 'El rol es obligatorio').trim().not().isEmpty().isLength({max:20}),
+    check("nombre", 'El nombre es obligatorio').trim().not().isEmpty().isLength({max:50}),
     check("password",'El password debe ser mas de 8 caracteres').trim().not().isEmpty().isLength({min:6 ,max:15}),
+    check("tipoDocumento", 'El tipo documento es obligatorio').trim().not().isEmpty(),
+    check("numeroDocumento", 'El numero documento es obligatorio').trim().not().isEmpty().isLength({max:20}),
+    check("direccion", 'la direccion es obligatoria').trim().not().isEmpty(),
+    check("telefono", 'El telefono es obligatorio').trim().not().isEmpty().isLength({max:50}),
     check("email", 'El correo no es valido').trim().not().isEmpty().isEmail(),
     check("nombre").custom(existeUsuarioNombre),
     validarCampos

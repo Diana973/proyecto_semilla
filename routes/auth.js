@@ -8,7 +8,7 @@ const router = Router();
 
 
 router.post("/",[
-     check('email','El email es obligatorio').trim().not().isEmpty().isEmail(),
+     check('email','El email es obligatorio').trim().not().isEmpty().isEmail().isLength({max:50}),
      check('password', 'La contraseña es obligatoria').trim().not().isEmpty().isLength({min:6 ,max:15}),
      validarCampos
 ],   login);

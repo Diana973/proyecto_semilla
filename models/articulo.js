@@ -8,13 +8,13 @@ const ArticuloSchema=mongoose.Schema({
     },
     nombre:{ type:String,
     required:[true,"El nombre es obligatorio"],
-    maxlegth:250,
+    maxlegth:100,
     unique:true
     },
     categoria:{
         type:mongoose.Schema.Types.ObjectId,ref:'Categoria',   
         required:[true,"la categoria es obligatoria"],
-        maxlegth:250
+        maxlegth:100
     },
     stock:{
         type:Number,
@@ -27,7 +27,7 @@ const ArticuloSchema=mongoose.Schema({
     descripcion:{
         type:String,
         requerid:true,
-        maxlength:100,
+        maxlength:200,
     },
     estado:{
         type:Number, 

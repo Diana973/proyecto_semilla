@@ -25,7 +25,7 @@ const UsuarioSchema=mongoose.Schema({
     direccion:{
         type:String,
         required:true,
-        maxlengt:50
+       
     },
     telefono:{
         type:String,

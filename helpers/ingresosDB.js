@@ -34,5 +34,31 @@ import Articulo from "../models/articulo.js"
         }
     }
 
+    const detallesVacios = async (detalles) => {
+        if (detalles) {
+    
+            for (let i = 0; i < detalles.length; i++) {
+                const detalle = detalles[i]
+    
+    
+                if (detalle.nombreProducto === "" || detalle.cantidad==="" || detalle.precio==="" || detalle.descuento=== "") {
+                    throw new Error('Agrega un articulo')
+                }
+               
+            }
+        }
+    }
+    
+     const detallesVacio = async (detalles, next) => {
+    
+        if(detalles.length ==0){
+    
+         throw new Error(`Agregue productos a la venta`)
+    
+        }
+    
+    
+         }
 
-export {existeIngresoById,existeIngresoNcomprobante,existeArticuloStock}
+
+export {existeIngresoById,existeIngresoNcomprobante,existeArticuloStock,detallesVacio,detallesVacios}

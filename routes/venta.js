@@ -3,12 +3,13 @@ import { check } from "express-validator";
 import { validarCampos } from "../middlewares/validar_campos.js";
 import { validarJWT } from "../middlewares/validar-jwt.js";
 import { ventaGet,  ventaPost,  ventaGetbuscar,  ventaGetByid,  ventaPut,  ventaPutActivar,  ventaPutDesactivar,  ventaDelete} from "../controllers/venta.js";
-import { existeVentaById, existeVentaComprobante,existeArticuloStock} from "../helpers/ventasDB.js";
-
+import { existeVentaById, existeVentaComprobante,existeArticuloStock, detallesVacios,detallesVacio} from "../helpers/ventasDB.js";
+import { checkRol } from "../middlewares/permitirRol.js";
 const router = Router()
 
 router.get("/",
 validarJWT,
+checkRol(["Administrador","Vendedor"]),
 validarCampos, 
 ventaGet)
 
@@ -26,6 +27,7 @@ router.get("/id/:id",validarJWT,[
 
 
 router.post("/",validarJWT,[
+    checkRol(["Administrador","Vendedor"]),
     check("usuario",'El nombre del usuario es obligatorio').trim().not().isEmpty().isLength({max:100}),
     check("cliente",'El nombre del cliente es obligatorio').trim().not().isEmpty().isLength({max:50}),
     check("tipoComprobante",'El tipo comprobante es obligatorio').trim().not().isEmpty(),
@@ -33,6 +35,8 @@ router.post("/",validarJWT,[
     check("numeroComprobante",'El numero del comprobante es obligatorio').trim().not().isEmpty(),
     check("impuesto",'El impuesto es obligatorio').trim().not().isEmpty(),
     check("detalles").custom(existeArticuloStock),
+    check("detalles").custom(detallesVacios),
+    check("detalles").custom(detallesVacio),
     check("numeroComprovante").custom(existeVentaComprobante),
     validarCampos
 ], ventaPost)
@@ -43,11 +47,13 @@ router.put("/:id",validarJWT,[
 ], ventaPut)
 
 router.put("/activar/:id",validarJWT,[
+    checkRol(["Administrador","Vendedor"]),
     check('id', 'No es un mongold valido').isMongoId(),
     validarCampos
 ], ventaPutActivar)
 
 router.put("/desactivar/:id",validarJWT,[
+    checkRol(["Administrador","Vendedor"]),
     check('id', 'No es un mongold valido').isMongoId(),
     validarCampos
 ], ventaPutDesactivar)

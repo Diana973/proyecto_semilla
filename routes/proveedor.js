@@ -4,10 +4,11 @@ import { validarCampos } from "../middlewares/validar_campos.js";
 import { proveedorGet, proveedorPost, proveedorGetbuscar, proveedorGetByid, proveedorPut, proveedorPutActivar, proveedorPutDesactivar, proveedorDelete } from "../controllers/proveedor.js";
 import { existeProveedorById, existeProveedorDocumento, existeProveedorNombre } from "../helpers/proveedoresDB.js";
 import { validarJWT } from "../middlewares/validar-jwt.js";
-
+import { checkRol } from "../middlewares/permitirRol.js";
 const router = Router()
 
 router.get("/",validarJWT,
+checkRol(["Administrador","Almacenista"]),
 validarCampos,
  proveedorGet)
 
@@ -24,6 +25,7 @@ router.get("/id/:id",validarJWT,[
 
 
 router.post("/",validarJWT,[
+    checkRol(["Administrador","Almacenista"]),
     check("nombre", 'El nombre del proveedor es obligatorio').trim().not().isEmpty().isLength({max:50}),
     check("tipoPersona", 'El tipo persona  es obligatorio').trim().not().isEmpty(),
     check("tipoDocumento", 'El tipo documento  es obligatorio').trim().not().isEmpty(),
@@ -37,16 +39,19 @@ router.post("/",validarJWT,[
 ], proveedorPost)
 
 router.put("/:id",validarJWT,[
+    checkRol(["Administrador","Almacenista"]),
     check('id', 'No es un mongold validooo').isMongoId(),
     validarCampos
 ], proveedorPut)
 
 router.put("/activar/:id",validarJWT,[
+    checkRol(["Administrador","Almacenista"]),
     check('id', 'No es un mongold valido').isMongoId(),
     validarCampos
 ], proveedorPutActivar)
 
 router.put("/desactivar/:id",validarJWT,[
+    checkRol(["Administrador","Almacenista"]),
     check('id', 'No es un mongold valido').isMongoId(),
     validarCampos
 ], proveedorPutDesactivar)

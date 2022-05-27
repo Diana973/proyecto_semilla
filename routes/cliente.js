@@ -4,11 +4,12 @@ import { validarCampos } from "../middlewares/validar_campos.js";
 import { clienteGet,  clientePost, clienteGetbuscar, clienteGetByid, clientePut, clientePutActivar, clientePutDesactivar, clienteDelete} from "../controllers/cliente.js";
 import { existeClienteById, existeClientenDocumento } from "../helpers/clientesDB.js";
 import { validarJWT } from "../middlewares/validar-jwt.js";
-
+import { checkRol } from "../middlewares/permitirRol.js";
 const router = Router()
 
 router.get("/",
 validarJWT,
+checkRol(["Administrador","Vendedor"]),
 validarCampos,
 clienteGet)
 
@@ -25,6 +26,7 @@ router.get("/id/:id",validarJWT,[
 
 
 router.post("/",validarJWT,[
+    checkRol(["Administrador","Vendedor"]),
     check("nombre", 'El nombre del cliente es obligatorio').trim().not().isEmpty().isLength({max:50}),
     check("tipoPersona", 'El tipo de persona es obligatorio').trim().not().isEmpty(),
     check("tipoDocumento", 'El tipo de documento es obligatorio').trim().not().isEmpty(),
@@ -37,16 +39,19 @@ router.post("/",validarJWT,[
 ], clientePost)
 
 router.put("/:id",validarJWT,[
+    checkRol(["Administrador","Vendedor"]),
     check('id', 'No es un mongold valido').isMongoId(),
     validarCampos
 ], clientePut)
 
 router.put("/activar/:id",validarJWT,[
+    checkRol(["Administrador","Vendedor"]),
     check('id', 'No es un mongold valido').isMongoId(),
     validarCampos
 ], clientePutActivar)
 
 router.put("/desactivar/:id",validarJWT,[
+    checkRol(["Administrador","Vendedor"]),
     check('id', 'No es un mongold valido').isMongoId(),
     validarCampos
 ], clientePutDesactivar)

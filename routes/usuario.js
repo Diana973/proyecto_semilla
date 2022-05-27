@@ -30,6 +30,7 @@ router.post("/",[
     check("direccion", 'la direccion es obligatoria').trim().not().isEmpty(),
     check("telefono", 'El telefono es obligatorio').trim().not().isEmpty().isLength({max:50}),
     check("email", 'El correo no es valido').trim().not().isEmpty().isEmail(),
+    
     check("nombre").custom(existeUsuarioNombre),
     validarCampos
 ],usuarioPost)

@@ -3,9 +3,10 @@ import Articulo from "../models/articulo.js"
 
 const ventaPost=async (req,res)=>{
     
-      const {usuario,cliente,tipoComprobante,serieComprobante,numeroComprobante,fecha,detalles,impuesto,total}=req.body
+      const {usuario,cliente,tipoComprobante,serieComprobante,numeroComprobante,detalles,impuesto,total}=req.body
+      const fecha = new Date(Date.now() + (-1*new Date().getTimezoneOffset()*60000)).toISOString()
       const venta =new Venta({usuario,cliente,tipoComprobante,detalles,serieComprobante,numeroComprobante,fecha,impuesto,total})
-
+      
       venta.detalles.forEach(async (e) => { 
       e.subtotal=(e.cantidad * e.precio )-((e.cantidad * e.precio)*e.descuento)/100
       let { stock } = await Articulo.findById({ _id: e.id });
